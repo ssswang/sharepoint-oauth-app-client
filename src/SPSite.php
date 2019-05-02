@@ -15,7 +15,7 @@ namespace WeAreArchitect\SharePoint;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
-use GuzzleHttp\Message\ResponseInterface;
+use GuzzleHttp\Psr7\Response;
 
 class SPSite implements SPRequesterInterface
 {
@@ -93,7 +93,7 @@ class SPSite implements SPRequesterInterface
         $this->http = $http;
 
         // set Site Hostname and Path
-        $components = parse_url($this->http->getBaseUrl());
+        $components = parse_url($this->http->getConfig()["base_url"]);
 
         if (! isset($components['scheme'], $components['host'], $components['path'])) {
             throw new SPException('The SharePoint Site URL is invalid');
@@ -193,11 +193,11 @@ class SPSite implements SPRequesterInterface
      * Parse the SharePoint API response
      *
      * @access  protected
-     * @param   \GuzzleHttp\Message\ResponseInterface $response
+     * @param   \GuzzleHttp\Psr7\Response $response
      * @throws  SPException
      * @return  array
      */
-    protected function parseResponse(ResponseInterface $response)
+    protected function parseResponse(Response $response)
     {
         $httpStatus = $response->getStatusCode();
         $json = json_decode($response->getBody(), true);
@@ -243,7 +243,7 @@ class SPSite implements SPRequesterInterface
                 'exceptions' => false, // avoid throwing exceptions when we get HTTP errors (4XX, 5XX)
             ]);
 
-            $response = $this->http->send($this->http->createRequest($method, $url, $options));
+            $response = $this->http->request($method, $url, $options);
 
             return $json ? $this->parseResponse($response) : $response;
         } catch (TransferException $e) {

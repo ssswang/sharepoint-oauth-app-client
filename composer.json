@@ -1,9 +1,9 @@
 {
-	"name": "wearearchitect/sharepoint-oauth-app-client",
+	"name": "ssswang/sharepoint-oauth-app-client",
 	"type": "library",
 	"description": "SharePoint OAuth App Client",
 	"keywords": ["sharepoint", "online", "2013", "oauth", "rest", "api", "client"],
-	"homepage": "https://github.com/wearearchitect/sharepoint-oauth-app-client",
+	"homepage": "https://github.com/ssswang/sharepoint-oauth-app-client",
 	"license": "MIT",
 	"authors": [
 		{

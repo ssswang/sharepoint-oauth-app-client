@@ -10,6 +10,10 @@
 			"name": "Quetzy Garcia",
 			"email": "qgarcia@wearearchitect.com",
 			"role": "Developer"
+		},
+		{
+			"name": "Song Wang",
+			"role": "Developer"
 		}
 	],
 	"require": {

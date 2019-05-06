@@ -201,7 +201,7 @@ class SPSite implements SPRequesterInterface
     {
         $httpStatus = $response->getStatusCode();
         $json = json_decode($response->getBody(), true);
-        dump($json);
+
         if ($httpStatus >= 400) {
             $message = null;
 

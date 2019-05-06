@@ -60,3 +60,22 @@ $settings = [
     ]
 ];
 ```
+
+
+# App Permissions
+
+ Open `https://<SharePoint website>/_layouts/15/appinv.aspx`, 
+ 
+ In the App Id field enter your client Id and click 'Lookup'. The other fields you have already known from previous steps.
+ 
+ Paste the following XML in the 'Permission Request XML' field.
+ 
+ 
+ ```
+<AppPermissionRequests AllowAppOnlyPolicy="true">
+ <AppPermissionRequest Scope="http://sharepoint/social/tenant" Right="Read" />
+</AppPermissionRequests>
+
+```
+
+and submit.

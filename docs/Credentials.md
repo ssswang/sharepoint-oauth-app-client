@@ -73,7 +73,7 @@ $settings = [
  
  ```
 <AppPermissionRequests AllowAppOnlyPolicy="true">
- <AppPermissionRequest Scope="http://sharepoint/social/tenant" Right="Read" />
+ <AppPermissionRequest Scope="http://sharepoint/content/sitecollection" Right="Read" />
 </AppPermissionRequests>
 
 ```

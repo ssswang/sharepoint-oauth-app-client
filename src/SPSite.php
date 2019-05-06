@@ -186,7 +186,7 @@ class SPSite implements SPRequesterInterface
 
         $http = new Client($settings['http']);
 
-        return new SPSite($http, $settings['site']);
+        return new static($http, $settings['site']);
     }
 
     /**
@@ -240,14 +240,10 @@ class SPSite implements SPRequesterInterface
     {
         echo $url."\n";
         try {
-            $options = array_replace_recursive($options,
-                //["headers" =>
-                    [
-                        'exceptions' => false, // avoid throwing exceptions when we get HTTP errors (4XX, 5XX)
-                    ]
-                //]
-            );
-            dump($options);
+            $options = array_replace_recursive($options, [
+                    'exceptions' => false, // avoid throwing exceptions when we get HTTP errors (4XX, 5XX)
+            ]);
+            
             $response = $this->http->request($method, $url, $options);
 
             return $json ? $this->parseResponse($response) : $response;

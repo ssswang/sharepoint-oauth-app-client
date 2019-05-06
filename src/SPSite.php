@@ -93,7 +93,7 @@ class SPSite implements SPRequesterInterface
         $this->http = $http;
 
         // set Site Hostname and Path
-        $components = parse_url($this->http->getConfig()["base_url"]);
+        $components = parse_url($this->http->getConfig()["base_uri"]);
 
         if (! isset($components['scheme'], $components['host'], $components['path'])) {
             throw new SPException('The SharePoint Site URL is invalid');
@@ -180,7 +180,7 @@ class SPSite implements SPRequesterInterface
         $settings = array_replace_recursive($settings, [
             'site' => [], // SharePoint Site configuration
             'http' => [   // Guzzle HTTP Client configuration
-                'base_url' => $url,
+                'base_uri' => $url,//Guzzle 6
             ],
         ]);
 
@@ -201,7 +201,7 @@ class SPSite implements SPRequesterInterface
     {
         $httpStatus = $response->getStatusCode();
         $json = json_decode($response->getBody(), true);
-
+        dump($json);
         if ($httpStatus >= 400) {
             $message = null;
 
@@ -210,8 +210,8 @@ class SPSite implements SPRequesterInterface
             if (json_last_error() !== JSON_ERROR_NONE) {
                 $message = $response->getBody();
             } else {
-                if (isset($json['odata.error']['message']['value']) && $message === null) {
-                    $message = $json['odata.error']['message']['value'];
+                if (isset($json['error']['message']['value']) && $message === null) {
+                    $message = $json['error']['message']['value'];
                 }
 
                 if (isset($json['error_description']) && $message === null) {
@@ -238,11 +238,16 @@ class SPSite implements SPRequesterInterface
      */
     public function request($url, array $options = [], $method = 'GET', $json = true)
     {
+        echo $url."\n";
         try {
-            $options = array_replace_recursive($options, [
-                'exceptions' => false, // avoid throwing exceptions when we get HTTP errors (4XX, 5XX)
-            ]);
-
+            $options = array_replace_recursive($options,
+                //["headers" =>
+                    [
+                        'exceptions' => false, // avoid throwing exceptions when we get HTTP errors (4XX, 5XX)
+                    ]
+                //]
+            );
+            dump($options);
             $response = $this->http->request($method, $url, $options);
 
             return $json ? $this->parseResponse($response) : $response;

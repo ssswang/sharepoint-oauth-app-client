@@ -186,7 +186,7 @@ class SPSite implements SPRequesterInterface
 
         $http = new Client($settings['http']);
 
-        return new static($http, $settings['site']);
+        return new SPSite($http, $settings['site']);
     }
 
     /**
@@ -210,8 +210,8 @@ class SPSite implements SPRequesterInterface
             if (json_last_error() !== JSON_ERROR_NONE) {
                 $message = $response->getBody();
             } else {
-                if (isset($json['error']['message']['value']) && $message === null) {
-                    $message = $json['error']['message']['value'];
+                if (isset($json['odata.error']['message']['value']) && $message === null) {
+                    $message = $json['odata.error']['message']['value'];
                 }
 
                 if (isset($json['error_description']) && $message === null) {

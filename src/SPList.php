@@ -588,4 +588,32 @@ class SPList extends SPListObject
 
         return true;
     }
+    
+    public function getFields(array $settings = [])
+    {
+        $settings = array_replace_recursive([
+            'top'   => 5000, // SharePoint Item threshold
+        ], $settings, [
+            'extra' => [],   // extra SharePoint Item properties to map
+        ]);
+
+        $json = $this->request("_api/web/Lists(guid'".$this->getGUID()."')/fields", [
+            'headers' => [
+                'Authorization' => 'Bearer '.$this->getSPAccessToken(),
+                'Accept'        => 'application/json',
+            ],
+
+            'query'   => [
+                'top' => $settings['top'],
+            ],
+        ]);
+        $fields = [];
+
+        foreach ($json['value'] as $field) {
+            if(!$field["ReadOnlyField"] && !$field["Hidden"])
+                $fields []= $field;
+        }
+
+        return $fields;
+    }
 }

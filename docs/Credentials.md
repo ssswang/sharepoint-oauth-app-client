@@ -33,7 +33,7 @@ The `client_id` format is `<client id>/<app domain>@<bearer realm>`
 The secret can be found in the **Client Secret** input form of the **App registration** page.
 It's value should be something similar to: `YzcZQ7N4lTeK5COin/nmNRG5kkL35gAW1scrum5mXVgE=`
 
-## App-only Policy specifics
+## App-only Policy specifics 
 The `resource`, `client_id` and `secret` must be part of the `SPSite` settings, when using the following methods:
 - `SPSite::createSPAccessToken()`
 - `SPAccessToken::createAOP()`
@@ -48,7 +48,7 @@ $settings = [
 ];
 ```
 
-## User-only Policy specifics
+## User-only Policy specifics 
 Only the `secret` needs to be included in the `SPSite` settings, when using the following methods:
 - `SPSite::createSPAccessToken()`
 - `SPAccessToken::createUOP()`
@@ -62,7 +62,7 @@ $settings = [
 ```
 
 
-# App Permissions
+# App Permissions (Assume you use App-only Policy)
 
  Open `https://<SharePoint website>/_layouts/15/appinv.aspx`, 
  

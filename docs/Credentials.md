@@ -73,9 +73,11 @@ $settings = [
  
  ```
 <AppPermissionRequests AllowAppOnlyPolicy="true">
- <AppPermissionRequest Scope="http://sharepoint/content/sitecollection" Right="FullControl" />
+ <AppPermissionRequest Scope="http://sharepoint/content/sitecollection" Right="Write" />
 </AppPermissionRequests>
 
 ```
-
 and submit.
+
+Note: Please read Microsoft documentation about permissions:
+https://docs.microsoft.com/en-us/sharepoint/dev/sp-add-ins/add-in-permissions-in-sharepoint

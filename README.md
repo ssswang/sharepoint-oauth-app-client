@@ -28,7 +28,8 @@ use WeAreArchitect\SharePoint\SPException;
 use WeAreArchitect\SharePoint\SPList;
 use WeAreArchitect\SharePoint\SPSite;
 
-try {
+    //Get credential instuctions https://github.com/ssswang/sharepoint-oauth-app-client/blob/master/docs/Credentials.md
+    try {
     $settings = [
         'site' => [
             'resource'  => '00000000-0000-ffff-0000-000000000000/example.sharepoint.com@09g7c3b0-f0d4-416d-39a7-09671ab91f64',
@@ -42,7 +43,21 @@ try {
 
     // generate an Access Token (App-only Policy)
     $site->createSPAccessToken();
+    $site->createSPFormDigest();
+    
+    //$folder = SPFolder::getByRelativeUrl($site, 'IT API Test Library');
 
+    //$newFolder = SPFolder::create($folder, "2019/06", []);
+
+
+    //echo "Write to IT API Test Library...\n";
+    //$name = "test.pdf";
+
+    //$content = fopen(storage_path($name), 'r');
+
+    //$this->uploadFile($site, 'IT API Test Library/2019/06', $name, $content);
+    
+    
     // get all the Lists and respective Items 
     $lists = SPList::getAll($site, [
         'fetch' => true,

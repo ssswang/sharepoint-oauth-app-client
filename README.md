@@ -45,17 +45,17 @@ use WeAreArchitect\SharePoint\SPSite;
     $site->createSPAccessToken();
     $site->createSPFormDigest();
     
-    //$folder = SPFolder::getByRelativeUrl($site, 'IT API Test Library');
+    $folder = SPFolder::getByRelativeUrl($site, 'IT API Test Library');
 
-    //$newFolder = SPFolder::create($folder, "2019/06", []);
+    $newFolder = SPFolder::create($folder, "2019/06", []);
 
 
-    //echo "Write to IT API Test Library...\n";
-    //$name = "test.pdf";
+    echo "Write to IT API Test Library...\n";
+    $name = "test.pdf";
 
-    //$content = fopen(storage_path($name), 'r');
+    $content = fopen(storage_path($name), 'r');
 
-    //$this->uploadFile($site, 'IT API Test Library/2019/06', $name, $content);
+    $this->uploadFile($site, 'IT API Test Library/2019/06', $name, $content);
     
     
     // get all the Lists and respective Items 

@@ -15,7 +15,7 @@ This library aims for [PSR-1][], [PSR-2][] and [PSR-4][] standards compliance.
 
 ## Installation
 ``` bash
-composer require "ssswang/sharepoint-oauth-app-client:1.0"
+composer require ssswang/sharepoint-oauth-app-client
 ```
 
 ## Basic usage example

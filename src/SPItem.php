@@ -157,6 +157,16 @@ class SPItem extends SPObject implements SPItemInterface
         return new static($list, $json, $extra);
     }
 
+    public static function getFieldsByID(SPList $list, $id, array $extra = [])
+    {
+        $json = $list->request("_api/web/Lists(guid'".$list->getGUID()."')/items(".$id.")", [
+            'headers' => [
+                'Authorization' => 'Bearer '.$list->getSPAccessToken(),
+                'Accept'        => 'application/json',
+            ],
+        ]);
+        return $json;
+    }
     /**
      * Create a SharePoint Item
      *

@@ -425,6 +425,38 @@ class SPFile extends SPObject implements SPItemInterface
         return new static($folder, $json, $extra);
     }
 
+    public static function createByTemplate($folder, $content, $name = null, $overwrite = false, array $extra = [])
+    {
+        $folder->isWritable(true);
+
+        if (empty($name)) {
+            if ($content instanceof SplFileInfo) {
+                $name = $content->getFilename();
+            }
+
+            if (is_resource($content) || is_string($content)) {
+                throw new SPException('SharePoint File Name is empty/not set');
+            }
+        }
+        $url = "_api/web/GetFolderByServerRelativeUrl('".$folder->getRelativeUrl()."')/Files/AddTemplateFile(urlOfFile='" .$folder->getRelativeUrl()."/". $name ."',templateFileType=1)";
+
+        $json = $folder->request($url, [
+            'headers' => [
+                'Authorization'   => 'Bearer '.$folder->getSPAccessToken(),
+                'Accept'          => 'application/json',
+                'X-RequestDigest' => (string) $folder->getSPFormDigest(),
+                //'Content-length'  => strlen($data),
+            ],
+
+            'query'   => [
+                '$expand' => 'ListItemAllFields',
+            ],
+
+            //'body'    => $data,
+        ], 'POST');
+
+        return new static($folder, $json, $extra);
+    }
     /**
      * Update a SharePoint File
      *

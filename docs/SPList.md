@@ -4,8 +4,8 @@
 ```
         $list = SPList::getByTitle($site, 'IT API Test List');
 
-        $items = $list->getFields();
-        //$items = $list->getSPItems();
+        $fields = $list->getFields();
+        $items = $list->getSPItems();
         var_dump($items);
         //exit;
 ;       $list->createSPItem([

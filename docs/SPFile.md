@@ -164,6 +164,16 @@ try {
 }
 ```
 
+
+## Create using template
+Create a SharePoint File Using template, wiki is id 1
+```php
+    $folder = SPFolder::getByRelativeUrl($this->spoSite, env("SP_WIKI_FOLDER"));
+    //SPFile::create($folder, "", "normal_empty_file", true);
+    $obj = SPFile::createByTemplate($folder, "", $name.".aspx", true, 1);
+```
+
+
 ## Update
 Update a SharePoint File
 

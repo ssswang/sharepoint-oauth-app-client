@@ -157,6 +157,19 @@ class SPItem extends SPObject implements SPItemInterface
         return new static($list, $json, $extra);
     }
 
+    public static function getByTitle(SPList $list, $title, array $extra = [])
+    {
+        $url = "_api/web/Lists(guid'".$list->getGUID()."')/items?"."$"."orderby=Created desc&"."$"."filter=Title+eq+'".$title."'";
+        $json = $list->request($url, [
+            'headers' => [
+                'Authorization' => 'Bearer '.$list->getSPAccessToken(),
+                'Accept'        => 'application/json',
+            ],
+        ]);
+
+        return $json ? $json["value"] : null;
+    }
+    
     public static function getFieldsByID(SPList $list, $id, array $extra = [])
     {
         $json = $list->request("_api/web/Lists(guid'".$list->getGUID()."')/items(".$id.")", [

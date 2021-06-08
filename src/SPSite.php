@@ -188,7 +188,51 @@ class SPSite implements SPRequesterInterface
 
         return new static($http, $settings['site']);
     }
+    
+    public static function start(SPFolderInterface $folder, $data, $name = null, $guid)
+    {
+        $json = $folder->request("_api/web/getfilebyserverrelativeurl('".$name."')/startupload(uploadId='".$guid."')", [
+            'headers' => [
+                'Authorization'   => 'Bearer '.$folder->getSPAccessToken(),
+                'Accept'          => 'application/json',
+                'X-RequestDigest' => (string) $folder->getSPFormDigest(),
+                'Content-length'  => strlen($data),
+            ],
+            'body'    => $data,
+        ], 'POST');
 
+        return new static($folder, $json, []);
+    }
+
+    public static function continue(SPFolderInterface $folder, $data, $name = null, $guid, $offset)
+    {
+        $json = $folder->request("_api/web/getfilebyserverrelativeurl('".$name."')/continueupload(uploadId='".$guid."',fileOffset=".$offset.")", [
+            'headers' => [
+                'Authorization'   => 'Bearer '.$folder->getSPAccessToken(),
+                'Accept'          => 'application/json',
+                'X-RequestDigest' => (string) $folder->getSPFormDigest(),
+                'Content-length'  => strlen($data),
+            ],
+
+            'body'    => $data,
+        ], 'POST');
+        return new static($folder, $json, []);
+    }
+
+    public static function finish(SPFolderInterface $folder, $data, $name = null, $guid, $offset)
+    {
+        $json = $folder->request("_api/web/getfilebyserverrelativeurl('".$name."')/finishupload(uploadId='".$guid."',fileOffset=".$offset.")", [
+            'headers' => [
+                'Authorization'   => 'Bearer '.$folder->getSPAccessToken(),
+                'Accept'          => 'application/json',
+                'X-RequestDigest' => (string) $folder->getSPFormDigest(),
+                'Content-length'  => strlen($data),
+            ],
+
+            'body'    => $data,
+        ], 'POST');
+        return new static($folder, $json, []);
+    }
     /**
      * Parse the SharePoint API response
      *
@@ -238,7 +282,7 @@ class SPSite implements SPRequesterInterface
      */
     public function request($url, array $options = [], $method = 'GET', $json = true)
     {
-        echo $url."\n";
+        //echo $url."\n";
         try {
             $options = array_replace_recursive($options, [
                     'exceptions' => false, // avoid throwing exceptions when we get HTTP errors (4XX, 5XX)
@@ -248,6 +292,7 @@ class SPSite implements SPRequesterInterface
 
             return $json ? $this->parseResponse($response) : $response;
         } catch (TransferException $e) {
+            dump($e->getResponse()->getBody()->getContents());
             throw SPException::fromTransferException($e);
         }
     }

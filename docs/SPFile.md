@@ -524,3 +524,39 @@ try {
 
 ## Timestamps
 `SPFile` timestamp methods belong to a trait and are documented [here](SPTimestamps.md).
+
+
+## Upload files larger than 262 Megabytes
+```
+            $stream = $this->ftp->readStream($object['path']);
+
+            $meta = fstat($stream);
+            $desFolderName = "Shared%20Documents/Test";
+            $folder = SPFolder::getByRelativeUrl($this->spo, $desFolderName);
+            //dump($folder);
+            $max = 262144000;
+            
+            $serverRelativeUrl = $folder->getRelativeUrl().$object['filename'].'.'.$object['extension'];
+            try {
+                
+                $guid = UUID::v4(); // Create your own class for UUID
+                $content = stream_get_contents($stream, $max);
+                SPFile::create($folder, '', $object['filename'].'.'.$object['extension'], true);
+                SPFile::start($folder, $content, $serverRelativeUrl, $guid);
+                $left = $meta['size'] - $max;
+                $offset = $max;
+                while($left > $max){
+                    $content = stream_get_contents($stream, $max);
+                    SPFile::continue($folder, $content, $serverRelativeUrl, $guid, $offset);
+                    $offset +=  $max;
+                    $left -= $max; 
+                }
+                $content = stream_get_contents($stream, $max);
+                SPFile::finish($folder, $content, $serverRelativeUrl, $guid, $offset);
+            
+            } catch (\Exception $e) {
+                $msg = $object['path'] . " failed write to Spo. ";
+                dump($msg . $e->getMessage());
+                Log::error($msg . $e->getMessage());
+            }
+            ```

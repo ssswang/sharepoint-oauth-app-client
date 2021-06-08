@@ -238,7 +238,7 @@ class SPSite implements SPRequesterInterface
      */
     public function request($url, array $options = [], $method = 'GET', $json = true)
     {
-        echo $url."\n";
+        //echo $url."\n";
         try {
             $options = array_replace_recursive($options, [
                     'exceptions' => false, // avoid throwing exceptions when we get HTTP errors (4XX, 5XX)

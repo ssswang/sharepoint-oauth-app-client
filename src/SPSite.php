@@ -248,6 +248,7 @@ class SPSite implements SPRequesterInterface
 
             return $json ? $this->parseResponse($response) : $response;
         } catch (TransferException $e) {
+            dump($e->getResponse()->getBody()->getContents());
             throw SPException::fromTransferException($e);
         }
     }

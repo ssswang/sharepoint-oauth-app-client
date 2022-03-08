@@ -18,7 +18,7 @@
         ]]
             
             
-      ```
+```
       
 How to get SPlist fields
 ```
@@ -28,4 +28,4 @@ How to get SPlist fields
         $fields = $list->getFields();
         dump($fields);
         
-         ```
+ ```

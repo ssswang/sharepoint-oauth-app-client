@@ -43,7 +43,7 @@ Example update SPList item meta
         // Update SPItem
         $spItem->update([
             "OData__ExtendedDescription" => 'sample description',
-            "Semester" => 'sample semester,
+            "Semester" => 'sample semester',
             "Title" => 'sample title'
         ]);
         

@@ -2,14 +2,7 @@
  
 ## SPItem
 
-```
 
-        $items = SPItem::getByTitle($list, "SitePagesTemplateV1");
-        foreach ($items as $item){
-            if($item["ID"] > 60)
-                return $item;
-        }
-```
 Example update SPList item meta
 
 ```
@@ -28,18 +21,43 @@ Example update SPList item meta
         $site->createSPAccessToken();
         $site->createSPFormDigest();
         
+        // Get SPList
+        
+        $list = SPList::getByTitle($site, "list name");
+        $listFields = $list->getFields();
+        dump($listFields);
+        
+        // Get SPFile
         try {
             $folder = SPFolder::getByRelativeUrl($this->spo, $folderName);
             $file = SPFile::getByName($folder, $fileName);
         } catch (\Exception $e){
             $file = null;
         }
-        
+        // Get SPItem
         $spItem = $file->getSPItem();
+        
+        // Get SPItem field list
+        $fields = $item->toArray();
+        
+        // Update SPItem
         $spItem->update([
             "OData__ExtendedDescription" => 'sample description',
             "Semester" => 'sample semester,
             "Title" => 'sample title'
         ]);
+        
+        // or
+        
+        $data = [
+            "OData__ExtendedDescription" => 'sample description',
+            "Semester" => 'sample semester,
+            "Title" => 'sample title'
+        ];
+        
+        $item = $list->getSPItem($fields["id"]);
+        $guid = $item->getGUID();
+
+        $list->updateSPItem($guid, $data);
         
 ```

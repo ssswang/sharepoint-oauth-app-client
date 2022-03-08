@@ -13,7 +13,7 @@
         "Title" => "Test 2",
         "UrlTest" => [
             //"odata.type" => "SP.FieldUrlValue",
-            "Url" => "https://test.sharepoint.com/sites/test/IT%20API%20Test%20Library/Forms/AllItems.aspx?id=%2Fsites%2Fscs-test%2FIT%20API%20Test%20Library%2F2019%2F05%2F",
+            "Url" => "https://test.sharepoint.com/sites/test/IT%20API%20Test%20Library/Forms/AllItems.aspx?id=%2Fsites%2Fscs-test",
             "Description" =>  "Application File"
         ]]
             

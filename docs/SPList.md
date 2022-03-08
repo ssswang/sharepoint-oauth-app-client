@@ -19,3 +19,13 @@
             
             
       ```
+      
+How to get SPlist fields
+```
+
+        $list = SPList::getByTitle($site, $this->argument('list'));
+
+        $fields = $list->getFields();
+        dump($fields);
+        
+         ```

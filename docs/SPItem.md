@@ -61,3 +61,6 @@ Example update SPList item meta
         $list->updateSPItem($guid, $data);
         
 ```
+
+Further documentation:
+https://www.codeproject.com/Articles/990131/CRUD-Operation-to-List-Using-SharePoint-Rest-API

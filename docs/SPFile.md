@@ -170,7 +170,7 @@ Create a SharePoint File Using template, wiki is id 1
 ```php
     $folder = SPFolder::getByRelativeUrl($this->spoSite, env("SP_WIKI_FOLDER"));
     //SPFile::create($folder, "", "normal_empty_file", true);
-    $obj = SPFile::createByTemplate($folder, "", $name.".aspx", true, 1);
+    $obj = SPFile::createByTemplate($folder, "", $name.".aspx", 1);
 ```
 
 
@@ -542,17 +542,17 @@ try {
                 $guid = UUID::v4(); // Create your own class for UUID
                 $content = stream_get_contents($stream, $max);
                 SPFile::create($folder, '', $object['filename'].'.'.$object['extension'], true);
-                SPFile::start($folder, $content, $serverRelativeUrl, $guid);
+                SPFile::start($folder, $object['filename'].'.'.$object['extension'], $content, $serverRelativeUrl, $guid);
                 $left = $meta['size'] - $max;
                 $offset = $max;
                 while($left > $max){
                     $content = stream_get_contents($stream, $max);
-                    SPFile::continue($folder, $content, $serverRelativeUrl, $guid, $offset);
+                    SPFile::continue($folder, $object['filename'].'.'.$object['extension'], $content, $serverRelativeUrl, $guid, $offset);
                     $offset +=  $max;
                     $left -= $max; 
                 }
                 $content = stream_get_contents($stream, $max);
-                SPFile::finish($folder, $content, $serverRelativeUrl, $guid, $offset);
+                SPFile::finish($folder, $object['filename'].'.'.$object['extension'], $content, $serverRelativeUrl, $guid, $offset);
             
             } catch (\Exception $e) {
                 $msg = $object['path'] . " failed write to Spo. ";

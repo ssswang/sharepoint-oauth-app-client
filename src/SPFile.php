@@ -426,7 +426,7 @@ class SPFile extends SPObject implements SPItemInterface
     }
 
         
-    public static function start(SPFolderInterface $folder, $data, $name = null, $guid)
+    public static function start(SPFolderInterface $folder, $data, $name, $guid)
     {
         $json = $folder->request("_api/web/getfilebyserverrelativeurl('".$name."')/startupload(uploadId='".$guid."')", [
             'headers' => [
@@ -441,7 +441,7 @@ class SPFile extends SPObject implements SPItemInterface
         return new static($folder, $json, []);
     }
 
-    public static function continue(SPFolderInterface $folder, $data, $name = null, $guid, $offset)
+    public static function continue(SPFolderInterface $folder, $data, $name, $guid, $offset)
     {
         $json = $folder->request("_api/web/getfilebyserverrelativeurl('".$name."')/continueupload(uploadId='".$guid."',fileOffset=".$offset.")", [
             'headers' => [
@@ -471,19 +471,10 @@ class SPFile extends SPObject implements SPItemInterface
         return new static($folder, $json, []);
     }
     
-    public static function createByTemplate($folder, $content, $name = null, $overwrite = false, $templateId, array $extra = [])
+    public static function createByTemplate($folder, $content, $name, $templateId, array $extra = [])
     {
         $folder->isWritable(true);
 
-        if (empty($name)) {
-            if ($content instanceof SplFileInfo) {
-                $name = $content->getFilename();
-            }
-
-            if (is_resource($content) || is_string($content)) {
-                throw new SPException('SharePoint File Name is empty/not set');
-            }
-        }
         $url = "_api/web/GetFolderByServerRelativeUrl('".$folder->getRelativeUrl()."')/Files/AddTemplateFile(urlOfFile='" .$folder->getRelativeUrl()."/". $name ."',templateFileType=".$templateId.")";
 
         $json = $folder->request($url, [

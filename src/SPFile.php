@@ -456,7 +456,7 @@ class SPFile extends SPObject implements SPItemInterface
         return new static($folder, $json, []);
     }
 
-    public static function finish(SPFolderInterface $folder, $data, $name = null, $guid, $offset)
+    public static function finish(SPFolderInterface $folder, $data, $name, $guid, $offset)
     {
         $json = $folder->request("_api/web/getfilebyserverrelativeurl('".$name."')/finishupload(uploadId='".$guid."',fileOffset=".$offset.")", [
             'headers' => [

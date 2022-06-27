@@ -542,17 +542,17 @@ try {
                 $guid = UUID::v4(); // Create your own class for UUID
                 $content = stream_get_contents($stream, $max);
                 SPFile::create($folder, '', $object['filename'].'.'.$object['extension'], true);
-                SPFile::start($folder, $object['filename'].'.'.$object['extension'], $content, $serverRelativeUrl, $guid);
+                SPFile::start($folder, $content, $serverRelativeUrl, $guid);
                 $left = $meta['size'] - $max;
                 $offset = $max;
                 while($left > $max){
                     $content = stream_get_contents($stream, $max);
-                    SPFile::continue($folder, $object['filename'].'.'.$object['extension'], $content, $serverRelativeUrl, $guid, $offset);
+                    SPFile::continue($folder, $content, $serverRelativeUrl, $guid, $offset);
                     $offset +=  $max;
                     $left -= $max; 
                 }
                 $content = stream_get_contents($stream, $max);
-                SPFile::finish($folder, $object['filename'].'.'.$object['extension'], $content, $serverRelativeUrl, $guid, $offset);
+                SPFile::finish($folder, $content, $serverRelativeUrl, $guid, $offset);
             
             } catch (\Exception $e) {
                 $msg = $object['path'] . " failed write to Spo. ";

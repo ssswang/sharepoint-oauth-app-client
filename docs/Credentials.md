@@ -77,6 +77,13 @@ $settings = [
 </AppPermissionRequests>
 
 ```
+
+```
+<AppPermissionRequests AllowAppOnlyPolicy="true">
+<AppPermissionRequest Scope="http://sharepoint/content/sitecollection/web/list" Right="Write" />
+</AppPermissionRequests>
+```
+
 and submit.
 
 Note: Please read Microsoft documentation about permissions:

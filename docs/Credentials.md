@@ -70,13 +70,14 @@ $settings = [
  
  Paste the following XML in the 'Permission Request XML' field.
  
- 
+ For a site:
  ```
 <AppPermissionRequests AllowAppOnlyPolicy="true">
- <AppPermissionRequest Scope="http://sharepoint/content/sitecollection" Right="Write" />
+ <AppPermissionRequest Scope="http://sharepoint/content/sitecollection/web" Right="Write" />
 </AppPermissionRequests>
 
 ```
+For a folder or list
 
 ```
 <AppPermissionRequests AllowAppOnlyPolicy="true">

@@ -79,7 +79,35 @@ class SPAccessToken extends SPObject implements Serializable
             'extra'   => $this->extra,
         ];
     }
+    
+    /**
+     * Serialize SharePoint Access Token
+     *
+     * @access  public
+     * @return  string
+     */
+    public function __serialize()
+    {
+        return serialize([
+            $this->token,
+            $this->expires->getTimestamp(),
+            $this->expires->getTimezone()->getName(),
+        ]);
+    }
 
+    /**
+     * Recreate SharePoint Access Token
+     *
+     * @access  public
+     * @param   string $serialized
+     * @return  void
+     */
+    public function __unserialize($serialized)
+    {
+        list($this->token, $timestamp, $timezone) = unserialize($serialized);
+
+        $this->expires = Carbon::createFromTimeStamp($timestamp, $timezone);
+    }
     /**
      * Serialize SharePoint Access Token
      *

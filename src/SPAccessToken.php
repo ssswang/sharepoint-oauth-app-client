@@ -17,8 +17,8 @@ use Exception;
 use Serializable;
 
 use Carbon\Carbon;
-use JWT;
-
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 class SPAccessToken extends SPObject implements Serializable
 {
     /**
@@ -168,7 +168,7 @@ class SPAccessToken extends SPObject implements Serializable
         }
 
         try {
-            $jwt = JWT::decode($contextToken, $config['secret'], false);
+            $jwt = JWT::decode($contextToken, new Key($config['secret'], 'HS256'), false);
         } catch (Exception $e) {
             throw new SPException('Unable to decode the Context Token', 0, $e);
         }

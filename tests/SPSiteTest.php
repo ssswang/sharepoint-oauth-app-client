@@ -159,7 +159,7 @@ class SPSiteTest extends PHPUnit_Framework_TestCase
             'isbrowserhostedapp' => true,
         ];
 
-        $access_token = JWT::encode($payload, 'secret');
+        $access_token = JWT::encode($payload, 'secret', 'HS256');
 
         $site->createSPAccessToken($access_token);
 

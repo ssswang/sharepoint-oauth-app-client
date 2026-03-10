@@ -1,3 +1,8 @@
+Due to recent Microsoft changes regarding "from Azure Access Control Service to Azure Active Directory", we decided to shift from Sharepoint REST API to Graph REST API.
+
+
+
+
 # SharePoint OAuth App Client
 The **SharePoint OAuth App Client** is a [PHP](http://www.php.net) library that makes it easy to authenticate via [OAuth2](http://oauth.net/2/) with the SharePoint Online (2013) REST API and work with **Lists**, **Folders**, **Items**, **Files** and **Users**.
 
